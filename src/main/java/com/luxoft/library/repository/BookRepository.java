@@ -20,8 +20,8 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     /**
      * Поиск книги по названию.
      *
-     * @param name имя автопарка.
-     * @return автопарк
+     * @param name название книги.
+     * @return книгу
      */
     Optional<Book> findByName(String name);
 
