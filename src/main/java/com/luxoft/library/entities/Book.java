@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @Table(schema = "library", name = "book")
 public class Book {
 
@@ -34,7 +34,7 @@ public class Book {
     private List<Author> author = new ArrayList<>();
 
     @Column(name = "comment")
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
 
     @Column(name = "genre")

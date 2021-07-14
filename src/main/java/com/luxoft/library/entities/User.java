@@ -30,7 +30,7 @@ public class User {
     private String password;
 
     @Column(name = "comment_list")
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
 }
