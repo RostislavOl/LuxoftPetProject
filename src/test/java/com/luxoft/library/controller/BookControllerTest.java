@@ -1,6 +1,5 @@
 package com.luxoft.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luxoft.library.dto.BookDTO;
 import com.luxoft.library.dto.NewBookDTO;
@@ -10,7 +9,6 @@ import com.luxoft.library.entities.Genre;
 import com.luxoft.library.repository.AuthorRepository;
 import com.luxoft.library.repository.BookRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -47,7 +43,7 @@ class BookControllerTest {
     private AuthorRepository authorRepository;
 
     @AfterEach
-    void shutDown(){
+    void shutDown() {
         bookRepository.deleteAll();
         authorRepository.deleteAll();
     }
@@ -57,14 +53,14 @@ class BookControllerTest {
     public void add_newBook() throws Exception {
         /*initial variables*/
         var author = Author.builder()
-                                    .id(UUID.randomUUID())
-                                    .fullName("А.С. Пушкин")
-                                    .build();
+                .id(UUID.randomUUID())
+                .fullName("А.С. Пушкин")
+                .build();
 
         var bookDTO = NewBookDTO.builder()
-                                            .name("test book")
-                                            .author(Collections.singletonList(author))
-                                            .genre(Genre.ANTHOLOGY).build();
+                .name("test book")
+                .author(Collections.singletonList(author))
+                .genre(Genre.ANTHOLOGY).build();
         /*setting request*/
         var response =
                 mockMvc.perform(
@@ -82,22 +78,15 @@ class BookControllerTest {
     @DisplayName("Получение книги")
     public void get_singleBook() throws Exception {
         /*initial variables*/
-        var author = Author.builder()
-                .id(UUID.randomUUID())
-                .fullName("А.С. Пушкин")
-                .build();
-
-        //authorRepository.saveAllAndFlush(author);
-
         var id = bookRepository
                 .save(Book.builder()
                         .name("Сказка о рыбаке и рыбке")
-                        //.author(Collections.singletonList(author))
                         .comment(Collections.emptyList())
                         .genre(Genre.FAIRYTALE).build()).getId();
 
+        /*setting request*/
         var response =
-                mockMvc.perform(get("/autopark/" + id)).andExpect(status().isOk())
+                mockMvc.perform(get("/book/" + id)).andExpect(status().isOk())
                         .andReturn();
 
         var actual = objectMapper.readValue(response.getResponse().getContentAsString(), BookDTO.class);
@@ -107,4 +96,51 @@ class BookControllerTest {
         assertThat(actual.getId()).isEqualTo(id);
     }
 
+    @Test
+    @DisplayName("Удаление книги из репозитория")
+    public void delete_book() throws Exception {
+        /*initial variables*/
+        var id = bookRepository
+                .save(Book.builder()
+                        .name("Сказка о рыбаке и рыбке")
+                        .comment(Collections.emptyList())
+                        .genre(Genre.FAIRYTALE).build()).getId();
+
+        assertEquals(1, bookRepository.findAll().size());
+
+        /*setting request*/
+        mockMvc.perform(delete("/book/" + id)).andExpect(status().isOk())
+                .andReturn();
+
+        /*assertions block*/
+        assertEquals(0, bookRepository.findAll().size());
+    }
+
+    @Test
+    @DisplayName("Изменение данных книги")
+    public void edit_bookData() throws Exception {
+        /*initial variables*/
+        var id = bookRepository
+                .save(Book.builder()
+                        .name("Сказка о рыбаке и рыбке")
+                        .comment(Collections.emptyList())
+                        .genre(Genre.FAIRYTALE).build()).getId();
+
+        var bookDTO = NewBookDTO.builder()
+                .name("Мечтают ли андроиды об электроовцах")
+                .comment(Collections.emptyList())
+                .genre(Genre.SCIENCEFICTION).build();
+
+        mockMvc.perform(
+                put("/book/" + id).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                bookDTO)))
+                .andExpect(status().isOk());
+
+        var actual = bookRepository.findAll().get(0);
+
+        /*assertions block*/
+        assertEquals(Genre.SCIENCEFICTION, actual.getGenre());
+        assertEquals("Мечтают ли андроиды об электроовцах", actual.getName());
+    }
 }
