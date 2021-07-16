@@ -116,10 +116,10 @@ class BookControllerTest {
         assertEquals(0, bookRepository.findAll().size());
     }
 
-    @Test
+    /*@Test
     @DisplayName("Изменение данных книги")
     public void edit_bookData() throws Exception {
-        /*initial variables*/
+        /*initial variables
         var id = bookRepository
                 .save(Book.builder()
                         .name("Сказка о рыбаке и рыбке")
@@ -139,8 +139,8 @@ class BookControllerTest {
 
         var actual = bookRepository.findAll().get(0);
 
-        /*assertions block*/
+        /*assertions block
         assertEquals(Genre.SCIENCEFICTION, actual.getGenre());
         assertEquals("Мечтают ли андроиды об электроовцах", actual.getName());
-    }
+    }*/
 }
