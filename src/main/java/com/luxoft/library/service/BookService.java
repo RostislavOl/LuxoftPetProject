@@ -1,8 +1,11 @@
 package com.luxoft.library.service;
 
+import com.luxoft.library.entities.Author;
 import com.luxoft.library.entities.Book;
+import com.luxoft.library.entities.Comment;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,4 +60,17 @@ public interface BookService {
      */
     Book findByName(String name);
 
+    /**
+     * Поиск авторов.
+     *
+     * @param authorIds список ID авторов.
+     */
+    List<Author> getAuthorList(List<UUID> authorIds);
+
+    /**
+     * Поиск комментариев.
+     *
+     * @param commentIds список ID комментариев.
+     */
+    List<Comment> getComments(List<UUID> commentIds);
 }

@@ -5,12 +5,15 @@ import lombok.Value;
 
 import java.util.UUID;
 
+/**
+ * DTO комментария.
+ */
 @Value
 @Builder
-public class BookDTO {
+public class CommentDTO {
 
     private UUID id;
 
-    private String name;
+    private String commentBody;
 
 }

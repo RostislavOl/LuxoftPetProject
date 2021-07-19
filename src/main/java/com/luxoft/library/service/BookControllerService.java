@@ -49,6 +49,6 @@ public interface BookControllerService {
      *
      * @return коллекцию книг.
      */
-    Collection<? extends BookDTO> get();
+    Collection<BookDTO> get();
 
 }

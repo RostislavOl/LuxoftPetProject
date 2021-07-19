@@ -37,9 +37,8 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
 
-    @Column(name = "genre")
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Genre genre = Genre.STORY;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 
 }

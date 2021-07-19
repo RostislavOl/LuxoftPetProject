@@ -1,12 +1,11 @@
 package com.luxoft.library.dto;
 
-import com.luxoft.library.entities.Author;
-import com.luxoft.library.entities.Comment;
 import com.luxoft.library.entities.Genre;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * DTO книги.
@@ -17,9 +16,9 @@ public class NewBookDTO {
 
     private String name;
 
-    private List<Author> author;
+    private List<UUID> author;
 
-    private List<Comment> comment;
+    private List<UUID> comment;
 
     private Genre genre;
 

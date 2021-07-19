@@ -27,8 +27,8 @@ public class BookControllerServiceImpl implements BookControllerService {
     public BookDTO add(NewBookDTO book) {
         var entity = Book.builder()
                                     .id(UUID.randomUUID())
-                                    .author(book.getAuthor())
-                                    .comment(book.getComment())
+                                    .author(service.getAuthorList(book.getAuthor()))
+                                    .comment(service.getComments(book.getComment()))
                                     .name(book.getName())
                                     .genre(book.getGenre())
                                     .build();
@@ -45,8 +45,8 @@ public class BookControllerServiceImpl implements BookControllerService {
 
         entity =
                 entity.toBuilder().name(book.getName())
-                        .author(book.getAuthor())
-                        .comment(book.getComment())
+                        .author(service.getAuthorList(book.getAuthor()))
+                        .comment(service.getComments(book.getComment()))
                         .genre(book.getGenre())
                         .build();
 
@@ -67,7 +67,7 @@ public class BookControllerServiceImpl implements BookControllerService {
     }
 
     @Override
-    public Collection<? extends BookDTO> get() {
+    public Collection<BookDTO> get() {
         return service.get().stream().map(this::createResponse).collect(Collectors.toList());
     }
 

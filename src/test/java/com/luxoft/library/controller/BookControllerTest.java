@@ -8,6 +8,7 @@ import com.luxoft.library.entities.Book;
 import com.luxoft.library.entities.Genre;
 import com.luxoft.library.repository.AuthorRepository;
 import com.luxoft.library.repository.BookRepository;
+import com.luxoft.library.repository.GenreRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,10 +43,14 @@ class BookControllerTest {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
     @AfterEach
     void shutDown() {
         bookRepository.deleteAll();
         authorRepository.deleteAll();
+        genreRepository.deleteAll();
     }
 
     @Test
@@ -57,10 +62,19 @@ class BookControllerTest {
                 .fullName("А.С. Пушкин")
                 .build();
 
+        authorRepository.save(author);
+
+        var genre = Genre.builder()
+                                .id(UUID.randomUUID())
+                                .genreName("Антология").build();
+
+        genreRepository.save(genre);
+
         var bookDTO = NewBookDTO.builder()
                 .name("test book")
-                .author(Collections.singletonList(author))
-                .genre(Genre.ANTHOLOGY).build();
+                .author(Collections.singletonList(author.getId()))
+                .comment(Collections.emptyList())
+                .genre(genre).build();
         /*setting request*/
         var response =
                 mockMvc.perform(
@@ -78,11 +92,16 @@ class BookControllerTest {
     @DisplayName("Получение книги")
     public void get_singleBook() throws Exception {
         /*initial variables*/
+
+        var genre = Genre.builder()
+                .id(UUID.randomUUID())
+                .genreName("Сказка").build();
+
         var id = bookRepository
                 .save(Book.builder()
                         .name("Сказка о рыбаке и рыбке")
                         .comment(Collections.emptyList())
-                        .genre(Genre.FAIRYTALE).build()).getId();
+                        .genre(genre).build()).getId();
 
         /*setting request*/
         var response =
@@ -100,11 +119,15 @@ class BookControllerTest {
     @DisplayName("Удаление книги из репозитория")
     public void delete_book() throws Exception {
         /*initial variables*/
+        var genre = Genre.builder()
+                .id(UUID.randomUUID())
+                .genreName("Сказка").build();
+
         var id = bookRepository
                 .save(Book.builder()
                         .name("Сказка о рыбаке и рыбке")
                         .comment(Collections.emptyList())
-                        .genre(Genre.FAIRYTALE).build()).getId();
+                        .genre(genre).build()).getId();
 
         assertEquals(1, bookRepository.findAll().size());
 

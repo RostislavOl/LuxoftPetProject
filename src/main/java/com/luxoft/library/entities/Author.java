@@ -21,6 +21,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(name = "faullname")
     private String fullName;
 
 }
