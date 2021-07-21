@@ -3,7 +3,6 @@ package com.luxoft.library.service.impl;
 import com.luxoft.library.entities.Author;
 import com.luxoft.library.entities.Book;
 import com.luxoft.library.entities.Comment;
-import com.luxoft.library.exceptions.DataNotFoundedExceptions;
 import com.luxoft.library.repository.AuthorRepository;
 import com.luxoft.library.repository.BookRepository;
 import com.luxoft.library.repository.CommentRepository;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
-import static com.luxoft.library.exceptions.constants.MessageResource.BOOK_BY_NAME_NOT_FOUND;
 
 /**
  * Имплементация книжного сервиса.
@@ -42,8 +39,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<? extends Book> get(UUID id) {
-        return repository.findById(id);
+    public Optional<Book> get(UUID id) {
+        return Optional.ofNullable(repository.findById(id));
     }
 
     @Override
@@ -59,27 +56,24 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findByName(String name) {
-        return repository.findByName(name).orElseThrow(
-                () -> new DataNotFoundedExceptions(BOOK_BY_NAME_NOT_FOUND, name)
-        );
+        return repository.findByName(name);
     }
 
-    public List<Author> getAuthorList(List<UUID> authorIds){
-        List<Author> authors= new ArrayList<>();
-        for (UUID authorId: authorIds){
+    public List<Author> getAuthorList(List<UUID> authorIds) {
+        List<Author> authors = new ArrayList<>();
+        for (UUID authorId : authorIds) {
             Optional<Author> optional = authorRepository.findById(authorId);
             optional.ifPresent(authors::add);
         }
         return authors;
     }
 
-    public List<Comment> getComments(List<UUID> commentIds){
+    public List<Comment> getComments(List<UUID> commentIds) {
         List<Comment> comments = new ArrayList<>();
         if (!commentIds.isEmpty()) {
 
             for (UUID commentId : commentIds) {
-                Optional<Comment> optional = commentRepository.findById(commentId);
-                optional.ifPresent(comments::add);
+                comments.add(commentRepository.findById(commentId));
             }
         }
         return comments;

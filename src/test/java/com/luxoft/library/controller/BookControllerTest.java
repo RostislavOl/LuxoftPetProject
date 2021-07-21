@@ -85,7 +85,7 @@ class BookControllerTest {
         var actual = objectMapper.readValue(response.getResponse().getContentAsString(), BookDTO.class);
 
         /*assertions block*/
-        assertThat(bookRepository.count()).isEqualTo(1);
+        assertThat(bookRepository.findAll().size()).isEqualTo(1);
     }
 
     @Test
