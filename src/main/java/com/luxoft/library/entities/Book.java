@@ -38,7 +38,7 @@ public class Book {
     private List<Comment> comment = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
 }

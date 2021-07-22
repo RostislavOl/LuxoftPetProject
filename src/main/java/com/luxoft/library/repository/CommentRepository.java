@@ -4,6 +4,7 @@ import com.luxoft.library.entities.Book;
 import com.luxoft.library.entities.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +30,7 @@ public class CommentRepository {
      * @param comment данные книги.
      * @return сохраненную книгу
      */
+    @Transactional
     public Comment save(Comment comment){
         return em.merge(comment);
     }

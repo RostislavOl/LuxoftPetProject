@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -54,6 +55,7 @@ class BookControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("Добавление книги")
     public void add_newBook() throws Exception {
         /*initial variables*/
@@ -62,13 +64,13 @@ class BookControllerTest {
                 .fullName("А.С. Пушкин")
                 .build();
 
-        authorRepository.save(author);
+        authorRepository.saveAndFlush(author);
 
         var genre = Genre.builder()
                                 .id(UUID.randomUUID())
                                 .genreName("Антология").build();
 
-        genreRepository.save(genre);
+        genreRepository.saveAndFlush(genre);
 
         var bookDTO = NewBookDTO.builder()
                 .name("test book")

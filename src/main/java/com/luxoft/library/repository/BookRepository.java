@@ -2,6 +2,7 @@ package com.luxoft.library.repository;
 
 import com.luxoft.library.entities.Book;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,7 @@ public class BookRepository{
      * @param book данные книги.
      * @return сохраненную книгу
      */
+    @Transactional
     public Book save(Book book){
         return em.merge(book);
     }
