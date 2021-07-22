@@ -1,7 +1,6 @@
 package com.luxoft.library.controller;
 
 import com.luxoft.library.dto.BookDTO;
-import com.luxoft.library.dto.NewBookDTO;
 import com.luxoft.library.service.BookControllerService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +24,11 @@ public class BookController {
      * Добавление новой книги.
      *
      * @param book сущность книги.
-     *
      * @return добавленую книгу.
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Добавление", description = "Добавление новой книги")
-    public BookDTO add(@RequestBody NewBookDTO book) {
+    public BookDTO add(@RequestBody BookDTO book) {
         return service.add(book);
     }
 
@@ -38,11 +36,11 @@ public class BookController {
      * Изменение сущности книги.
      *
      * @param bookId ID книги.
-     * @param book измененные данные.
+     * @param book   измененные данные.
      */
     @PutMapping(value = "{bookId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Изменение", description = "Изменение данных книги")
-    public void edit(@PathVariable("bookId") UUID bookId, @RequestBody NewBookDTO book) {
+    public void edit(@PathVariable("bookId") UUID bookId, @RequestBody BookDTO book) {
         service.edit(bookId, book);
     }
 
@@ -61,7 +59,6 @@ public class BookController {
      * Получение книги по ID.
      *
      * @param bookId ID книги.
-     *
      * @return книгу.
      */
     @GetMapping(value = "{bookId}", produces = MediaType.APPLICATION_JSON_VALUE)

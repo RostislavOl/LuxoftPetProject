@@ -1,7 +1,6 @@
 package com.luxoft.library.service;
 
 import com.luxoft.library.dto.CommentDTO;
-import com.luxoft.library.dto.NewCommentDTO;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -19,7 +18,7 @@ public interface CommentControllerService {
      *
      * @return добавленный комментарий.
      */
-    CommentDTO add(UUID bookId, NewCommentDTO comment);
+    CommentDTO add(UUID bookId, CommentDTO comment);
 
     /**
      * Изменение данных книги.
@@ -28,7 +27,7 @@ public interface CommentControllerService {
      * @param commentId ID комментария.
      * @param comment измененные данные комментария.
      */
-    void edit(UUID bookId, UUID commentId, NewCommentDTO comment);
+    void edit(UUID bookId, UUID commentId, CommentDTO comment);
 
     /**
      * Удаление комментария у книги.

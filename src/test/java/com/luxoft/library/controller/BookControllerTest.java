@@ -2,7 +2,6 @@ package com.luxoft.library.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luxoft.library.dto.BookDTO;
-import com.luxoft.library.dto.NewBookDTO;
 import com.luxoft.library.entities.Author;
 import com.luxoft.library.entities.Book;
 import com.luxoft.library.entities.Genre;
@@ -72,7 +71,7 @@ class BookControllerTest {
 
         genreRepository.saveAndFlush(genre);
 
-        var bookDTO = NewBookDTO.builder()
+        var bookDTO = BookDTO.builder()
                 .name("test book")
                 .author(Collections.singletonList(author.getId()))
                 .comment(Collections.emptyList())

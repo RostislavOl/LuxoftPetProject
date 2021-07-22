@@ -1,7 +1,6 @@
 package com.luxoft.library.service.impl;
 
 import com.luxoft.library.dto.CommentDTO;
-import com.luxoft.library.dto.NewCommentDTO;
 import com.luxoft.library.service.BookService;
 import com.luxoft.library.service.CommentControllerService;
 import com.luxoft.library.service.CommentService;
@@ -23,12 +22,12 @@ public class CommentControllerServiceImpl implements CommentControllerService {
     private final CommentService commentService;
 
     @Override
-    public CommentDTO add(UUID bookId, NewCommentDTO comment) {
+    public CommentDTO add(UUID bookId, CommentDTO comment) {
         return null;
     }
 
     @Override
-    public void edit(UUID bookId, UUID commentId, NewCommentDTO comment) {
+    public void edit(UUID bookId, UUID commentId, CommentDTO comment) {
 
     }
 

@@ -1,7 +1,6 @@
 package com.luxoft.library.service.impl;
 
 import com.luxoft.library.dto.BookDTO;
-import com.luxoft.library.dto.NewBookDTO;
 import com.luxoft.library.entities.Book;
 import com.luxoft.library.exceptions.DataNotFoundedExceptions;
 import com.luxoft.library.exceptions.DuplicateDataException;
@@ -24,20 +23,20 @@ public class BookControllerServiceImpl implements BookControllerService {
     private final BookService service;
 
     @Override
-    public BookDTO add(NewBookDTO book) {
+    public BookDTO add(BookDTO book) {
         var entity = Book.builder()
-                                    .id(UUID.randomUUID())
-                                    .author(service.getAuthorList(book.getAuthor()))
-                                    .comment(service.getComments(book.getComment()))
-                                    .name(book.getName())
-                                    .genre(book.getGenre())
-                                    .build();
+                .id(UUID.randomUUID())
+                .author(service.getAuthorList(book.getAuthor()))
+                .comment(service.getComments(book.getComment()))
+                .name(book.getName())
+                .genre(book.getGenre())
+                .build();
         service.save(entity);
         return createResponse(entity);
     }
 
     @Override
-    public void edit(UUID bookId, NewBookDTO book) {
+    public void edit(UUID bookId, BookDTO book) {
         var entity = service.get(bookId).orElseThrow(() -> new DataNotFoundedExceptions(Book.class.getSimpleName(), bookId));
         if (!service.isBookExists(book.getName(), entity)) {
             throw new DuplicateDataException(bookId, book.getName(), "name", book.getName());
@@ -73,7 +72,6 @@ public class BookControllerServiceImpl implements BookControllerService {
 
     private BookDTO createResponse(Book entity) {
         return BookDTO.builder()
-                .id(entity.getId())
                 .name(entity.getName())
                 .build();
     }

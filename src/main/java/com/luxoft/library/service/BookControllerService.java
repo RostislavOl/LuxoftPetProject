@@ -1,7 +1,6 @@
 package com.luxoft.library.service;
 
 import com.luxoft.library.dto.BookDTO;
-import com.luxoft.library.dto.NewBookDTO;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -15,18 +14,17 @@ public interface BookControllerService {
      * Добавление новой книги.
      *
      * @param book данные новой книги.
-     *
      * @return добавленную книгу.
      */
-    BookDTO add(NewBookDTO book);
+    BookDTO add(BookDTO book);
 
     /**
      * Изменение данных книги.
      *
      * @param bookId ID книги.
-     * @param book измененные данные книги.
+     * @param book   измененные данные книги.
      */
-    void edit(UUID bookId, NewBookDTO book);
+    void edit(UUID bookId, BookDTO book);
 
     /**
      * Удаление книги из библиотеки.
@@ -39,7 +37,6 @@ public interface BookControllerService {
      * Получение книги ID.
      *
      * @param bookId ID получаемой книги.
-     *
      * @return книгу.
      */
     BookDTO get(UUID bookId);

@@ -12,8 +12,10 @@ import java.util.UUID;
 @Builder
 public class CommentDTO {
 
-    private UUID id;
+    UUID id;
 
-    private String commentBody;
+    String textBody;
+
+    UUID bookId;
 
 }
