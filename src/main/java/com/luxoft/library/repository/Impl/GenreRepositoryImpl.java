@@ -2,26 +2,21 @@ package com.luxoft.library.repository.Impl;
 
 import com.luxoft.library.entities.Genre;
 import com.luxoft.library.repository.GenreRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
+@RequiredArgsConstructor
 public class GenreRepositoryImpl implements GenreRepository {
 
-    private EntityManager em = null;
-
-    /**
-     * Sets the entity manager.
-     */
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+    private final EntityManager em;
 
     /**
      * Добавить или обновить жанр.
@@ -52,8 +47,8 @@ public class GenreRepositoryImpl implements GenreRepository {
      *
      * @return колекцию книг
      */
-    public List<Genre> findAll() {
-        return em.createQuery("select genre from Genre genre", Genre.class).getResultList();
+    public Set<Genre> findAll() {
+        return new HashSet<>(em.createQuery("select genre from Genre genre", Genre.class).getResultList());
     }
 
     /**
@@ -81,7 +76,7 @@ public class GenreRepositoryImpl implements GenreRepository {
      * Очистка таблицы жанров.
      */
     public void deleteAll() {
-        List<Genre> genres = findAll();
+        Set<Genre> genres = findAll();
         for (Genre genre : genres) {
             em.remove(em.merge(genre));
         }

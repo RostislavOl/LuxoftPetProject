@@ -2,26 +2,19 @@ package com.luxoft.library.repository.Impl;
 
 import com.luxoft.library.entities.Book;
 import com.luxoft.library.repository.BookRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
+@RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
 
-    private EntityManager em = null;
-
-    /**
-     * Sets the entity manager.
-     */
-    @PersistenceContext
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
+    private final EntityManager em;
 
     /**
      * Сохранение книги.
