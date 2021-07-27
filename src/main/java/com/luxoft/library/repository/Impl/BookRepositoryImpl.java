@@ -43,9 +43,7 @@ public class BookRepositoryImpl implements BookRepository {
      * @return книгу
      */
     public Book findById(UUID id) {
-        return em.createQuery("select book from Book book where book.id = :id", Book.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        return em.find(Book.class, id);
     }
 
     /**
@@ -61,10 +59,7 @@ public class BookRepositoryImpl implements BookRepository {
      * Удаление всех книг.
      */
     public void deleteAll() {
-        List<Book> books = findAll();
-        for (Book book : books) {
-            em.remove(em.merge(book));
-        }
+        em.createQuery("DELETE FROM Book").executeUpdate();
     }
 
     /**

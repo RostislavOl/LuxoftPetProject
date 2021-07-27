@@ -52,9 +52,7 @@ public class CommentRepositoryImpl implements CommentRepository {
      * @return комментарий
      */
     public Comment findById(UUID id){
-        return em.createQuery("select comment from Comment comment where comment.id = :id", Comment.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        return em.find(Comment.class, id);
     }
 
     /**
@@ -70,10 +68,7 @@ public class CommentRepositoryImpl implements CommentRepository {
      * Удаление всех книг.
      */
     public void deleteAll() {
-        List<Comment> comments = em.createQuery("select comment from Comment comment", Comment.class).getResultList();
-        for (Comment comment : comments) {
-            em.remove(em.merge(comment));
-        }
+        em.createQuery("DELETE FROM Comment").executeUpdate();
     }
 
 }

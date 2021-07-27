@@ -58,9 +58,7 @@ public class GenreRepositoryImpl implements GenreRepository {
      * @return книгу
      */
     public Genre findById(UUID id) {
-        return em.createQuery("select genre from Genre genre where genre.id = :id", Genre.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        return em.find(Genre.class, id);
     }
 
     /**
@@ -76,10 +74,7 @@ public class GenreRepositoryImpl implements GenreRepository {
      * Очистка таблицы жанров.
      */
     public void deleteAll() {
-        Set<Genre> genres = findAll();
-        for (Genre genre : genres) {
-            em.remove(em.merge(genre));
-        }
+        em.createQuery("DELETE FROM Genre").executeUpdate();
     }
 
     /**
