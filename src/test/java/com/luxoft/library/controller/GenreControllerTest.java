@@ -3,8 +3,6 @@ package com.luxoft.library.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luxoft.library.dto.BookDTO;
 import com.luxoft.library.dto.GenreDTO;
-import com.luxoft.library.entities.Author;
-import com.luxoft.library.entities.Book;
 import com.luxoft.library.entities.Genre;
 import com.luxoft.library.repository.GenreRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -15,18 +13,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@EnableTransactionManagement
 @DisplayName("Проверка контроллера жанров")
 class GenreControllerTest {
 
@@ -119,8 +118,8 @@ class GenreControllerTest {
                         .genreName("Сказка").build()).getId();
 
         var genreDTO = GenreDTO.builder()
-                                        .id(id)
-                                        .body("Фантастика").build();
+                .id(id)
+                .body("Фантастика").build();
 
         mockMvc.perform(
                 put("/genre/" + id).contentType(MediaType.APPLICATION_JSON)

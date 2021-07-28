@@ -1,5 +1,6 @@
 package com.luxoft.library.service.impl;
 
+import com.luxoft.library.aspects.interfaces.LogExecutionTime;
 import com.luxoft.library.dto.GenreDTO;
 import com.luxoft.library.entities.Genre;
 import com.luxoft.library.exceptions.DataNotFoundedExceptions;
@@ -23,6 +24,7 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     private final GenreService service;
 
     @Override
+    @LogExecutionTime
     public GenreDTO add(GenreDTO genre) {
         var entity = Genre.builder()
                 .id(UUID.randomUUID())
@@ -49,6 +51,7 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     }
 
     @Override
+    @LogExecutionTime
     public void delete(UUID genreId) {
         var genre =
                 service.get(genreId).orElseThrow(() -> new DataNotFoundedExceptions(Genre.class.getName(), genreId));
@@ -56,12 +59,14 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     }
 
     @Override
+    @LogExecutionTime
     public GenreDTO get(UUID genreId) {
         return service.get(genreId).map(this::createResponse)
                 .orElseThrow(() -> new DataNotFoundedExceptions(Genre.class.getName(), genreId));
     }
 
     @Override
+    @LogExecutionTime
     public Set<GenreDTO> get() {
         return service.get().stream().map(this::createResponse).collect(Collectors.toSet());
     }

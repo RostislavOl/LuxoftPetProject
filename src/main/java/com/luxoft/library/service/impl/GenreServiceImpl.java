@@ -5,6 +5,7 @@ import com.luxoft.library.repository.GenreRepository;
 import com.luxoft.library.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
@@ -20,11 +21,13 @@ public class GenreServiceImpl implements GenreService {
     private final GenreRepository repository;
 
     @Override
+    @Transactional
     public Genre save(Genre entity) {
         return repository.save(entity);
     }
 
     @Override
+    @Transactional
     public boolean isGenreExists(String genreName, Genre entity) {
         return repository.existsByNameAndId(genreName, entity.getId());
     }
@@ -40,11 +43,13 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public void delete(Genre genre) {
         repository.delete(genre);
     }
 
     @Override
+    @Transactional
     public Genre findByName(String name) {
         return repository.findByName(name);
     }
