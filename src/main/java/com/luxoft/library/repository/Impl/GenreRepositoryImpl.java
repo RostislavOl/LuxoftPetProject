@@ -57,6 +57,7 @@ public class GenreRepositoryImpl implements GenreRepository {
      * @param id ID книги.
      * @return книгу
      */
+    @Transactional
     public Genre findById(UUID id) {
         return em.find(Genre.class, id);
     }
@@ -66,6 +67,7 @@ public class GenreRepositoryImpl implements GenreRepository {
      *
      * @param genre жанр.
      */
+    @Transactional
     public void delete(Genre genre) {
         em.remove(em.merge(genre));
     }

@@ -109,6 +109,7 @@ class GenreControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("Изменение данных жанра")
     public void edit_bookData() throws Exception {
         /*initial variables*/

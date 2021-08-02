@@ -9,6 +9,7 @@ import com.luxoft.library.service.GenreControllerService;
 import com.luxoft.library.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     }
 
     @Override
+    @Transactional
     public void edit(UUID genreId, GenreDTO genre) {
         var entity = service.get(genreId).orElseThrow(() -> new DataNotFoundedExceptions(Genre.class.getSimpleName(), genreId));
         if (!service.isGenreExists(genre.getBody(), entity)) {
