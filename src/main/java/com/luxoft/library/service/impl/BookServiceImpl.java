@@ -62,8 +62,7 @@ public class BookServiceImpl implements BookService {
     public List<Author> getAuthorList(List<UUID> authorIds) {
         List<Author> authors = new ArrayList<>();
         for (UUID authorId : authorIds) {
-            Optional<Author> optional = authorRepository.findById(authorId);
-            optional.ifPresent(authors::add);
+            authors.add(authorRepository.findById(authorId));
         }
         return authors;
     }
