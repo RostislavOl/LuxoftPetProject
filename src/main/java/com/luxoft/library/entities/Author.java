@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @Table(schema = "library", name = "author")
 public class Author {
 
