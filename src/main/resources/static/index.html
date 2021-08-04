@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
         "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Моя первая веб-страница</title>
@@ -9,6 +9,15 @@
 
 <h1>Заголовок страницы</h1>
 <p>Основной текст.</p>
+
+
+<form action="/genre" method="get">
+    <input type="submit" value="View and update genre catalog">
+</form>
+
+<form action="/authors" method="get">
+    <input type="submit" value="View or add author on catalog">
+</form>
 
 </body>
 </html>

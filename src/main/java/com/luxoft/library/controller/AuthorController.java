@@ -5,16 +5,17 @@ import com.luxoft.library.service.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.UUID;
 
 /**
  * Контроллер авторов
  */
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/authors")
 public class AuthorController {
 
@@ -74,8 +75,9 @@ public class AuthorController {
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Получение всех", description = "Получение списка всех авторов")
-    public Collection<AuthorDTO> getAll() {
-        return service.get();
+    public String getAll(Model model) {
+        model.addAttribute("author", service.get());
+        return "author_page";
     }
 
 }
