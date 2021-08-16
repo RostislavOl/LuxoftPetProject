@@ -15,6 +15,12 @@
         <tr>
             <td th:text="${genre.id}"></td>
             <td th:text="${genre.genreName}"></td>
+            <td>
+                <form th:action="|@{/genre/${genre.id}}|" method="post" th:object="${genre}">
+                    <input type="hidden" th:field="${genre.id}"/>
+                    <button type="submit" value="Submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
         </tr>
     </th:block>
 </table>

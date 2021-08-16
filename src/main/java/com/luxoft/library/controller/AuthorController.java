@@ -27,10 +27,11 @@ public class AuthorController {
      * @param author автор.
      * @return добавленый автор.
      */
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @Operation(summary = "Добавление", description = "Добавление нового автора")
-    public AuthorDTO add(@RequestBody AuthorDTO author) {
-        return service.add(author);
+    public String add(@RequestBody AuthorDTO author) {
+        service.add(author);
+        return "redirect:/authors";
     }
 
     /**

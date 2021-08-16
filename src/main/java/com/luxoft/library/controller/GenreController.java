@@ -27,7 +27,7 @@ public class GenreController {
      * @param genre жанр.
      * @return добавленый жанр.
      */
-    @PostMapping//(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @Operation(summary = "Добавление", description = "Добавление нового жанра")
     public String add(@ModelAttribute @RequestBody GenreDTO genre) {
         service.add(genre);
@@ -53,8 +53,9 @@ public class GenreController {
      */
     @DeleteMapping("{genreId}")
     @Operation(summary = "Удаление", description = "Удаление жанра")
-    public void delete(@PathVariable("genreId") UUID genreId) {
+    public String delete(@PathVariable("genreId") @ModelAttribute UUID genreId) {
         service.delete(genreId);
+        return "redirect:/genre";
     }
 
     /**
