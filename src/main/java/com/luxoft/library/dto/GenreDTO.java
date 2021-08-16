@@ -1,19 +1,23 @@
 package com.luxoft.library.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 /**
  * DTO жанра.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class GenreDTO {
 
-    UUID id;
+    private UUID id;
 
-    String body;
+    private String genreName;
 
 }

@@ -29,7 +29,7 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     public GenreDTO add(GenreDTO genre) {
         var entity = Genre.builder()
                 .id(UUID.randomUUID())
-                .genreName(genre.getBody())
+                .genreName(genre.getGenreName())
                 .build();
         service.save(entity);
         return createResponse(entity);
@@ -39,14 +39,13 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     @Transactional
     public void edit(UUID genreId, GenreDTO genre) {
         var entity = service.get(genreId).orElseThrow(() -> new DataNotFoundedExceptions(Genre.class.getSimpleName(), genreId));
-        if (!service.isGenreExists(genre.getBody(), entity)) {
-            throw new DuplicateDataException(genreId, genre.getBody(), "name", genre.getBody());
+        if (!service.isGenreExists(genre.getGenreName(), entity)) {
+            throw new DuplicateDataException(genreId, genre.getGenreName(), "name", genre.getGenreName());
         }
 
         entity =
                 entity.toBuilder()
-                        .id(genre.getId())
-                        .genreName(genre.getBody())
+                        .genreName(genre.getGenreName())
                         .build();
 
         service.save(entity);
@@ -76,7 +75,7 @@ public class GenreControllerServiceImpl implements GenreControllerService {
     private GenreDTO createResponse(Genre entity) {
         return GenreDTO.builder()
                 .id(entity.getId())
-                .body(entity.getGenreName())
+                .genreName(entity.getGenreName())
                 .build();
     }
 }

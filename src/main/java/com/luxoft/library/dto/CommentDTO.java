@@ -1,21 +1,25 @@
 package com.luxoft.library.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 /**
  * DTO комментария.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CommentDTO {
 
-    UUID id;
+    private UUID id;
 
-    String textBody;
+    private String textBody;
 
-    UUID bookId;
+    private UUID bookId;
 
 }

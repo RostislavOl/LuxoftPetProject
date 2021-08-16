@@ -54,7 +54,7 @@ class GenreControllerTest {
     public void add_newBook() throws Exception {
         /*initial variables*/
         var genreDTO = GenreDTO.builder()
-                .body("Антология").build();
+                .genreName("Антология").build();
 
         /*setting request*/
         var response =
@@ -124,8 +124,7 @@ class GenreControllerTest {
                 .genreName("Сказка").build()).getId();
 
         var genreDTO = GenreDTO.builder()
-                .id(id)
-                .body("Фантастика").build();
+                .genreName("Фантастика").build();
 
         mockMvc.perform(
                 put("/genre/" + id).contentType(MediaType.APPLICATION_JSON)
