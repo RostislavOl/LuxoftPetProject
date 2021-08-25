@@ -26,7 +26,7 @@
             <td th:text="${genre.id}"></td>
             <td th:text="${genre.genreName}"></td>
             <td>
-                <a th:href="@{/genre/(Id=${genre.id}})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/genre/(Id=${genre.id})}" class="btn btn-primary">Edit</a>
             </td>
         </tr>
     </th:block>
@@ -50,12 +50,12 @@
             <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Id:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="Id">
+                        <label for="Id" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" id="Id" name="Id">
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Genre Name:</label>
-                        <input type="text" class="form-control" id="message-text" name="genreName">
+                        <label for="genreName" class="col-form-label">Genre Name:</label>
+                        <input type="text" class="form-control" id="genreName" name="genreName">
                     </div>
             </div>
             <div class="modal-footer">
