@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Genres</title>
+    <link href="../css/genre_style.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+
+    <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+
+    <script type="text/javascript" src = "../static/js/edit_genre.js" th:src="@{/js/edit_genre.js}"></script>
+</head>
+<body>
+
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Genre Name</th>
+        <th>Edit</th>
+    </tr>
+    <th:block th:each="genre : ${genre}">
+        <tr>
+            <td th:text="${genre.id}"></td>
+            <td th:text="${genre.genreName}"></td>
+            <td>
+                <a th:href="@{/genre/(Id=${genre.id})}" class="btn btn-primary">Edit</a>
+            </td>
+        </tr>
+    </th:block>
+</table>
+
+<form name="add_button" action="/genre" method="post" th:object="${genre}">
+    <input name="genreName" type="text">
+    <input type="submit" class="btn btn-primary" value="Create new genre">
+</form>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form th:action="@{/genre/{genre.id}}" method="put">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit genre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="Id" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" id="Id" name="Id">
+                    </div>
+                    <div class="form-group">
+                        <label for="genreName" class="col-form-label">Genre Name:</label>
+                        <input type="text" class="form-control" id="genreName" name="genreName">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+</body>
+</html>

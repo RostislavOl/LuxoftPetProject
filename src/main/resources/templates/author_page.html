@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link href="../css/genre_style.css" rel="stylesheet">
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Author</th>
+    </tr>
+    <th:block th:each="author : ${author}">
+        <tr>
+            <td th:text="${author.id}"></td>
+            <td th:text="${author.fullName}"></td>
+        </tr>
+    </th:block>
+</table>
+
+<form name="add_button" action="/authors" method="post" th:object="${author}">
+    <input name="fullName" type="text">
+    <input type="submit" value="Add author">
+</form>
+
+</body>
+</html>
